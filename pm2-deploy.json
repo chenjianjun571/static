@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "sbs",
+    "name": "会展展示系统",
     "script": "./run.js",
     "watch": true,
     "env": {

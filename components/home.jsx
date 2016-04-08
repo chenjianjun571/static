@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import _ from 'lodash'
-import { NavConfig } from './config/nav-config'
 
 const Nav = React.createClass({
   render() {
@@ -38,7 +37,8 @@ const Menu = React.createClass({
       <div id="my-siderbar" className="col-sm-3 col-md-2 sidebar collapse in">
         <ul id="accordion" className="nav nav-list panel-group ">
           {
-            _.map(NavConfig, (v,k) => {
+            _.map(this.state.conf, (v,k) => {
+              console.log(JSON.stringify(v))
               return(
                 <Nav key={'value-'+k} data-target={'value-'+k} id={'value-'+k} {...v} />
               );
@@ -47,7 +47,32 @@ const Menu = React.createClass({
         </ul>
       </div>
     );
+  },
+
+  getDefaultProps(){
+    return {
+      conf:[] // 用此索引找到数据请求地址
+    }
+  },
+
+  getInitialState() {
+    return {
+      conf:[]
+    }
+  },
+
+  componentDidMount() {
+    // 请求配置数据
+    fetch('//'+window.location.host+'/api/list')
+      .then(res => {return res.json()})
+      .then(j=>{
+        if(j.success) {
+          /* 针对每个类型只取name和id字段 */
+          this.setState({conf:j.data})
+        }
+      })
   }
+
 });
 
 //data-uk-lightbox="{group:'my-group'}" data-lightbox-type='image'
@@ -102,28 +127,12 @@ const Home = React.createClass({
   },
 
   componentDidMount() {
+
     $('.J_FilterCtrl').on('click','.li-link',(evt)=>{
       let images = $(evt.currentTarget).attr('data-value').split(',')
       console.log(images)
       this.setState({listImage:images})
     })
-
-    //$('#accordion ul.collapse').on('shown.bs.collapse', function () {
-    //  $(this).parent().removeClass("arrow-unfold");
-    //  $(this).hasClass("in")&&$(this).parent().addClass("arrow-unfold");
-    //})
-    //
-    //$('#accordion ul.collapse').on('hidden.bs.collapse', function () {
-    //  $(this).parent().removeClass("arrow-unfold");
-    //  $(this).hasClass("in")&&$(this).parent().addClass("arrow-unfold");
-    //})
-    //
-    //$('#accordion').on("click","li",function(){
-    //  $(this).siblings().removeClass("active");
-    //  $(this).siblings().find("li").removeClass("active");
-    //  $(this).addClass("active");
-    //});
-
 
     $('#accordion ul.collapse').on('shown.bs.collapse', function() {
       $(this).hasClass("in") && $(this).parent().addClass("arrow-unfold");
