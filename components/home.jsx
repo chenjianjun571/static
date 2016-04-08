@@ -38,7 +38,6 @@ const Menu = React.createClass({
         <ul id="accordion" className="nav nav-list panel-group ">
           {
             _.map(this.state.conf, (v,k) => {
-              console.log(JSON.stringify(v))
               return(
                 <Nav key={'value-'+k} data-target={'value-'+k} id={'value-'+k} {...v} />
               );
@@ -89,6 +88,7 @@ const ImageList = React.createClass({
                       <a className="thumbnail" data-uk-lightbox="{group:'my-group'}" data-lightbox-type='image' href={v} >
                         <img src={v+'.tub'}/>
                       </a>
+                      <span><a href={v} target="_brank">@</a></span>
                     </li>
                 );
               })
