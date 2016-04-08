@@ -27,6 +27,7 @@ build/Release
 node_modules
 
 server/nav-config.js
+nav-config.js*
 
 # Optional npm cache directory
 .npm
