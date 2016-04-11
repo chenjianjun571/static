@@ -83,12 +83,13 @@ const ImageList = React.createClass({
           <ul className="photoAlbum">
             {
               this.props.data[0] !== "" && _.map(this.props.data, (v,k)=> {
+                let src = v.replace(/.min/g, "")
                 return(
                     <li key={v} className="photoItem">
                       <a className="thumbnail" data-uk-lightbox="{group:'my-group'}" data-lightbox-type='image' href={v} >
                         <img src={v+'.tub'}/>
                       </a>
-                      <span><a href={v} target="_brank">@</a></span>
+                      <span><a href={src} target="_brank">@</a></span>
                     </li>
                 );
               })
